@@ -1,12 +1,17 @@
 /* jshint indent: 2 */
 
 module.exports = function (sequelize, DataTypes) {
-    return sequelize.define('shops', {
+    return sequelize.define('goods', {
         id: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
             primaryKey: true,
             field: 'id'
+        },
+        shopId: {
+            type: DataTypes.INTEGER(11),
+            allowNull: false,
+            field: 'shop_id'
         },
         name: {
             type: DataTypes.STRING(255),
@@ -27,13 +32,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             allowNull: true,
             field: 'updated_at'
-        },
-        address: {
-            type: DataTypes.STRING(255),
-            allowNull: true,
-            field: 'address'
         }
     }, {
-        tableName: 'shops'
+        tableName: 'goods'
     });
 };
