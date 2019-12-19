@@ -1,20 +1,27 @@
 const GROUP_NAME = 'shops';
 const Joi = require('joi');
+const shopsHandle = require('../services/shops.js');
+const { paginationJoiDefine } = require('../utils/joi.js');
 
 module.exports = [
     {
         method: 'GET',
         path: `/${GROUP_NAME}`,
-        handler: () => {
-            return "获取店铺列表"
+        handler: async (request, h) => {
+            return await shopsHandle.findAll(request, h)
         },
         options: {
             tags: ['api', GROUP_NAME],
+            auth: false,
             description: '获取店铺列表',
             validate: {
                 query: {
-                    limit: Joi.number().integer().min(1).default(10).description('每页的条目数'),
-                    page: Joi.number().integer().min(1).default(1).description('页码数')
+                    ...paginationJoiDefine
+                }
+            },
+            response: {
+                status: {
+                    400: Joi.any().description('客户端请求错误')
                 }
             }
         },
